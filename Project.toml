@@ -1,0 +1,7 @@
+name = "AnaliseDeRedes"
+uuid = "38998a9c-5cbc-11e9-247c-37543c074e5d"
+authors = ["Guilherme Bodin <guilherme.b.moraes@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
