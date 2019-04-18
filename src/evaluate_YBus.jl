@@ -27,23 +27,30 @@ cargas = [ #bus #g #b
     3 0.90 -0.30
 ]
 """
-function buildYbus(admitancias, nbuses, cargas)
-    idx_cargas = Int.(cargas[:, 1])
+function buildYbus(admitancias, idx_buses; cargas = [])
+    if cargas != []
+        idx_cargas = Int.(cargas[:, 1])
+    end
     fr, to = (Int.(admitancias[:, 1]), Int.(admitancias[:, 2]))
+    nbuses = length(idx_buses)
     YBus = zeros(Complex, nbuses, nbuses)
-    for j = 1:nbuses, i = 1:j
-        if i == j
-            YBus == 0
+    for j = 1:nbuses, i = 1:nbuses
+        if idx_buses[i] == idx_buses[j]
+            YBus[i, i] = 0
         else
-            idx_ad = findfirst((i .== fr) .& (j .== to))
-            if !isempty(idx_ad)
-                YBus[i, j] = -admitancias[idx_ad, 3][1]
-                YBus[j, i] = -admitancias[idx_ad, 3][1]
+            idx_ad = findfirst((idx_buses[i] .== fr) .& (idx_buses[j] .== to))
+            if typeof(idx_ad) != Nothing
+                YBus[i, j] = -admitancias[idx_ad, 3]
+                YBus[j, i] = -admitancias[idx_ad, 3]
             end
         end
     end
     for i = 1:nbuses
-        hascarga = findfirst(x -> x == i, idx_cargas)
+        if cargas != []
+            hascarga = findfirst(x -> x == i, idx_cargas)
+        else
+            hascarga = nothing
+        end
         if typeof(hascarga) == Nothing
             YBus[i, i] = -sum(YBus[:, i])
         else
