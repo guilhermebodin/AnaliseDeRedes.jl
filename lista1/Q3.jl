@@ -1,4 +1,4 @@
-push!(LOAD_PATH, "/home/guilhermebodin/Documents/ELE2504/AnaliseDeRedes.jl/src")
+push!(LOAD_PATH, "/Users/guilhermebodin/Documents/AnaliseDeRedes.jl/src")
 using AnaliseDeRedes
 
 admitancias = [
@@ -36,4 +36,35 @@ z3 = U\c3
 # Zbus completa
 Zbus = [z1 z2 z3]
 
-Zbus - naiveZbus(Ybus)
+A = [
+ 1 0 3
+ 2 1 3
+ 4 1 2
+]
+
+E21 = [
+    1 0 0
+    -2 1 0
+    0 0 1
+]
+
+E31 = [
+    1 0 0
+    0 1 0
+    -4 0 1
+]
+
+E32 = [
+    1 0 0
+    0 1 0
+    0 -1 1
+]
+
+B = E32*E31*E21
+inv(B)
+
+lu(A)
+
+
+# item b
+I = Ybus*[0 ; 1; 0]
