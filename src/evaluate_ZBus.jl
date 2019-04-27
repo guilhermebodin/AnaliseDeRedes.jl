@@ -18,3 +18,10 @@ function smartZbus(Ybus)
     end
     return Zbus
 end
+
+function smartZth(Ybus, col)
+    Zbuscol = zeros(Complex, size(Ybus, 1))
+    I = zeros(size(Ybus, 1))
+    I[col] = 1
+    return eval_tensions(I, Ybus)[col]
+end
