@@ -9,7 +9,9 @@ export evaladmitancias,
        smartZth,
        eval_tensions,
        inputs,
-       shortcircuit
+       shortcircuit,
+       PHASE2SEQ,
+       SEQ2PHASE
 
 include("utils.jl")
 include("evaluate_YBus.jl")

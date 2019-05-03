@@ -18,6 +18,6 @@ cargas
 Ybus = buildYbus(admitancias, [1;2;3;4;5], cargas = cargas)
 Zbus = smartZbus(Ybus)
 
-Ia, Va = shortcircuit(impedancias, 1, [1;2;3;4;5], "a", 1)
+Ia, Va = shortcircuit(impedancias, 1, [1;2;3;4;5], "b", 1)
 Va
 Ia

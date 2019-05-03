@@ -7,7 +7,15 @@ function shortcircuit(impedancias, bus, idxbuses, fase, Vth)
         Zth[i] = smartZth(Ybus, bus)
         i+=1
     end
-    Iflt = 1/sum(Zth)
+    if fase == "a"
+        Iflt = 1/(SEQ2PHASE[1, :]'*Zth)
+    elseif fase == "b"
+        Iflt = 1/(SEQ2PHASE[2, :]'*Zth)
+    elseif fase == "c"
+        Iflt = 1/(SEQ2PHASE[3, :]'*Zth)
+    else
+        error("Fase só pode ser a, b ou c")
+    end
     Iseq = [Iflt; Iflt; Iflt]
     Vseq = [-Zth[3]*Iflt; Vth - Zth[1]*Iflt; -Zth[2]*Iflt]
     return SEQ2PHASE*Iseq, SEQ2PHASE*Vseq
