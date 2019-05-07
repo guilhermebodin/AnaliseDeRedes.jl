@@ -2,14 +2,14 @@ push!(LOAD_PATH, "/Users/guilhermebodin/Documents/AnaliseDeRedes.jl/src")
 using AnaliseDeRedes
 
 admitancias = [
-    1 2 0.2im
-    1 3 0.5im
-    2 3 0.4im
+    1 2 -5.0im
+    1 3 -2.0im
+    2 3 -2.5im
 ]
 
 cargas = [ #bus #g #b
-    1 0 0.2
-    3 0 0.25
+    1 0 -5
+    3 0 -4
 ]
 
 idx_buses = [1;2;3]
@@ -18,9 +18,9 @@ Ybus = buildYbus(admitancias, idx_buses; cargas  = cargas)
 using LinearAlgebra
 
 Ybus = [
-    0.0+0.9im  -0.0-0.2im  -0.0-0.5im
-    -0.0-0.2im  -0.0+0.6im  -0.0-0.4im
-    -0.0-0.5im  -0.0-0.4im   0.0+1.15im
+    0.0-12.0im   0.0+5.0im  0.0+2.0im
+    0.0+5.0im   -0.0-7.5im  0.0+2.5im
+    0.0+2.0im    0.0+2.5im  0.0-8.5im
 ]
 
 L, U = lu(Ybus)
@@ -35,6 +35,8 @@ c3 = L\[0; 0; 1]
 z3 = U\c3
 # Zbus completa
 Zbus = [z1 z2 z3]
+L
+U
 
 A = [
  1 0 3
@@ -67,4 +69,10 @@ lu(A)
 
 
 # item b
-I = Ybus*[0 ; 1; 0]
+z2
+Icc = 1/z2[2]
+Zbus*[0; -Icc; 0]
+
+-0.515/0.2im
+(0.592-0.515)/0.5im
+2.575 - 0.154
